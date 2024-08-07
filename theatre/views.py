@@ -5,7 +5,7 @@ from theatre.models import (
     Performance,
     Seat,
     Reservation,
-    Visitor
+    Visitor, Review
 )
 
 from theatre.serializers import (
@@ -13,7 +13,7 @@ from theatre.serializers import (
     PerformanceSerializer,
     SeatSerializer,
     ReservationSerializer,
-    VisitorSerializer
+    VisitorSerializer, ReviewSerializer
 )
 
 
@@ -40,3 +40,8 @@ class ReservationViewSet(viewsets.ModelViewSet):
 class VisitorViewSet(viewsets.ModelViewSet):
     queryset = Visitor.objects.all()
     serializer_class = VisitorSerializer
+
+
+class ReviewViewSet(viewsets.ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer

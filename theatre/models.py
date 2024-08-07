@@ -47,3 +47,14 @@ class Visitor(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Review(models.Model):
+    performance = models.ForeignKey(Performance, on_delete=models.CASCADE)
+    visitor = models.ForeignKey(Visitor, on_delete=models.CASCADE)
+    rating = models.PositiveIntegerField()
+    comment = models.TextField()
+    review_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Review by {self.visitor.name} on {self.performance.name}"
