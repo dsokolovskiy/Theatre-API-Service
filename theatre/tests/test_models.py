@@ -17,8 +17,8 @@ class TheatreModelTest(TestCase):
 class PerformanceModelTest(TestCase):
     def setUp(self):
         self.theatre = Theatre.objects.create(name="Royal Opera House", location="Govert Garden, London")
-        self.start_time = timezone.make_aware(datetime(2024, 10, 5, 19, 0))
-        self.end_time = timezone.make_aware(datetime(2024, 10, 5, 22, 0))
+        self.start_time = timezone.make_aware(datetime(2024, 12, 20, 20, 10))
+        self.end_time = timezone.make_aware(datetime(2024, 12, 20, 23, 0))
         self.performance = Performance.objects.create(
             name="La Traviata",
             description="An opera by Giuseppe Verdi.",
