@@ -2,6 +2,8 @@ from django.test import TestCase
 from django.utils import timezone
 from rest_framework.test import APIClient
 from rest_framework import status
+from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
 
 from datetime import datetime
 
@@ -10,7 +12,11 @@ from theatre.models import Theatre, Performance
 
 class TheatreAPITest(TestCase):
     def setUp(self):
+        self.user = User.objects.create_user(username="testuser", password="testpassword")
+        self.token = Token.objects.create(user=self.user)
         self.client = APIClient()
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token.key}")
+
         self.theatre = Theatre.objects.create(
             name="National Theatre",
             location="Prague, Czech Republic"
@@ -34,7 +40,11 @@ class TheatreAPITest(TestCase):
 
 class PerformanceAPITest(TestCase):
     def setUp(self):
+        self.user = User.objects.create_user(username="testuser", password="testpassword")
+        self.token = Token.objects.create(user=self.user)
         self.client = APIClient()
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token.key}")
+
         self.theatre = Theatre.objects.create(
             name="Theatre du Chatelet",
             location="Paris, France"
