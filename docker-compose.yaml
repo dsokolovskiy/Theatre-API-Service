@@ -12,7 +12,7 @@ services:
       - db
 
   db:
-    image: postgres:13
+    image: postgres:15
     environment:
       POSTGRES_DB: theatre_db
       POSTGRES_USER: theatre_user
