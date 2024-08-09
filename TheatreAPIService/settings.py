@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'TheatreAPIService.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'theatre_db',
-        'USER': 'theatre_user',
-        'PASSWORD': 'theatre_password',
+        'NAME': os.getenv('DATABASE_NAME', 'theatre_db'),
+        'USER': os.getenv('DATABASE_USER', 'theatre_user'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'your_password'),
         'HOST': 'db',
         'PORT': '5432',
     }
