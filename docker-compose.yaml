@@ -1,6 +1,15 @@
 version: "3.8"
 
 services:
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: theatre_db
+      POSTGRES_USER: theatre_user
+      POSTGRES_PASSWORD: theatre_password
+
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -10,17 +19,8 @@ services:
       - "8000:8000"
     depends_on:
       - db
-
-  db:
-    image: postgres:15
     environment:
-      POSTGRES_DB: theatre_db
-      POSTGRES_USER: theatre_user
-      POSTGRES_PASSWORD: theatre_password
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    ports:
-      - "5432:5432"
+      DATABASE_URL: postgres://theatre_user:theatre_password@db:5432/theatre_db
 
 volumes:
   postgres_data:
