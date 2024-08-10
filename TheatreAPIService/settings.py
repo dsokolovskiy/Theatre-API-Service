@@ -1,12 +1,9 @@
 import os
+import environ
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load environment variables from .env file
-SECRET_KEY = os.getenv('SECRET_KEY', 'default-secret-key')
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -51,16 +48,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'TheatreAPIService.wsgi.application'
 
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+environ.Env.read_env()
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DATABASE_NAME', 'theatre_db'),
-        'USER': os.getenv('DATABASE_USER', 'theatre_user'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'your_password'),
-        'HOST': os.getenv('DATABASE_HOST', 'db'),
-        'PORT': os.getenv('DATABASE_PORT', '5432'),
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': env('DATABASE_HOST'),
+        'PORT': env('DATABASE_PORT'),
     }
 }
+
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env.bool('DEBUG', default=False)
+ALLOWED_HOSTS = env.str('ALLOWED_HOSTS', default='').split(',')
 
 AUTH_PASSWORD_VALIDATORS = [
     {
