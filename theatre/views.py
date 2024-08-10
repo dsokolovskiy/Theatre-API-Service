@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 
 from theatre.models import (
     Theatre,
@@ -25,6 +25,10 @@ class TheatreViewSet(viewsets.ModelViewSet):
 class PerformanceViewSet(viewsets.ModelViewSet):
     queryset = Performance.objects.all()
     serializer_class = PerformanceSerializer
+    filter_backends = (filters.OrderingFilter, filters.SearchFilter)
+    search_fields = ("name", "description")
+    ordering_fields = "__all__"
+    ordering = ["start_time"]
 
 
 class SeatViewSet(viewsets.ModelViewSet):
